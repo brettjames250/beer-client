@@ -1,6 +1,7 @@
 package com.springmicroservices.breweryclient.web.client;
 
 import com.springmicroservices.breweryclient.web.model.BeerDto;
+import com.springmicroservices.breweryclient.web.model.CustomerDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -47,5 +48,35 @@ class BreweryClientTest {
     @Test
     void deleteBeerTest(){
         client.deleteBeer(UUID.randomUUID());
+    }
+
+    @Test
+    void getCustomerByIdTest() {
+        CustomerDto customerDto = client.getCustomerById(UUID.randomUUID());
+        assertThat(customerDto).isNotNull();
+    }
+
+    @Test
+    void addNewCustomerTest(){
+        //given
+        CustomerDto customerDto = CustomerDto.builder().name("new customer").build();
+
+        URI uri = client.addNewCustomer(customerDto);
+        assertThat(uri).isNotNull();
+        System.out.println(uri);
+    }
+
+    @Test
+    void updateCustomerTest(){
+        //given
+        CustomerDto customerDto = CustomerDto.builder().name("new customer").build();
+
+        client.updateCustomer(UUID.randomUUID(), customerDto);
+    }
+
+
+    @Test
+    void deleteCustomerTest(){
+        client.deleteCustomer(UUID.randomUUID());
     }
 }
